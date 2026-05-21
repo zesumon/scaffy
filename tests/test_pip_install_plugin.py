@@ -93,5 +93,17 @@ def test_pip_install_raises_on_missing_executable(plugin, python_context, tmp_pa
             plugin.run(python_context)
 
 
+def test_pip_install_error_includes_stderr(plugin, python_context, tmp_path):
+    """PluginError message should include stderr output from pip for easier debugging."""
+    req = tmp_path / "requirements.txt"
+    req.write_text("badpackage\n")
+    stderr_msg = "ERROR: Could not find a version that satisfies the requirement badpackage"
+
+    with patch("subprocess.run", return_value=_make_fail_result(1, stderr_msg)):
+        with pytest.raises(PluginError) as exc_info:
+            plugin.run(python_context)
+        assert stderr_msg in str(exc_info.value)
+
+
 def test_pip_install_repr(plugin):
     assert "pip_install" in repr(plugin)
