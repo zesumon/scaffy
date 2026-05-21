@@ -68,3 +68,24 @@ def resolve_template(name: str) -> Path:
     raise ConfigLoadError(
         f"Template '{name}' not found. Searched in: {searched}"
     )
+
+
+def list_templates() -> list[str]:
+    """Return the names of all available templates across default directories.
+
+    Templates are deduplicated by name; directories earlier in
+    ``DEFAULT_TEMPLATE_DIRS`` take precedence (their names appear first).
+
+    Returns:
+        Sorted list of template names without file extensions.
+    """
+    seen: set[str] = set()
+    names: list[str] = []
+    for directory in DEFAULT_TEMPLATE_DIRS:
+        if not directory.is_dir():
+            continue
+        for entry in sorted(directory.iterdir()):
+            if entry.suffix in (".yaml", ".yml") and entry.stem not in seen:
+                seen.add(entry.stem)
+                names.append(entry.stem)
+    return names
