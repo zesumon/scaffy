@@ -1,10 +1,10 @@
-"""Built-in plugins shipped with scaffy.
+"""Built-in scaffy plugins.
 
-Importing this package registers all built-in plugins so they are available
-via :func:`scaffy.plugins.registry.get_plugin` without the caller needing to
-import each module individually.
+Importing this package registers all bundled plugins automatically.
 """
 
-from scaffy.plugins.builtin import git_init, npm_init  # noqa: F401  — side-effect imports
+from scaffy.plugins.builtin import git_init  # noqa: F401
+from scaffy.plugins.builtin import npm_init  # noqa: F401
+from scaffy.plugins.builtin import venv_init  # noqa: F401
 
-__all__ = ["git_init", "npm_init"]
+__all__ = ["git_init", "npm_init", "venv_init"]
