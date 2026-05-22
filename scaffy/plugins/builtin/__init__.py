@@ -1,4 +1,4 @@
-"""Auto-import all built-in plugins so they self-register on package import."""
+"""Auto-import all built-in plugins so their @register decorators fire."""
 
 from scaffy.plugins.builtin import (
     git_init,
@@ -10,6 +10,7 @@ from scaffy.plugins.builtin import (
     editorconfig_init,
     license_init,
     readme_init,
+    gitignore_init,
 )
 
 __all__ = [
@@ -22,4 +23,5 @@ __all__ = [
     "editorconfig_init",
     "license_init",
     "readme_init",
+    "gitignore_init",
 ]
